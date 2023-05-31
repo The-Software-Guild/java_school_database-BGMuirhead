@@ -1,5 +1,10 @@
 package com.wileyedge.database.dao;
-
+import com.wileyedge.database.dao.CourseMapper;
+import com.wileyedge.database.dao.SchoolDao;
+import com.wileyedge.database.dao.StudentCountMapper;
+import com.wileyedge.database.dao.StudentMapper;
+import com.wileyedge.database.dao.TeacherCountMapper;
+import com.wileyedge.database.dao.TeacherMapper;
 import com.wileyedge.database.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -36,7 +41,7 @@ public class SchoolDaoImpl implements SchoolDao {
         // sorted by last name.
         // YOUR CODE STARTS HERE
 
-        String sql = "";
+        String sql = "SELECT fName,lName FROM student;";
 
         // YOUR CODE ENDS HERE
 
@@ -49,7 +54,7 @@ public class SchoolDaoImpl implements SchoolDao {
         // for all courses in the Computer Science department.
         // YOUR CODE STARTS HERE
 
-         String sql = "";
+         String sql = "select courseCode,courseDesc from course where courseCode like 'CS%';";
 
         // YOUR CODE ENDS HERE
         return jdbcTemplate.query(sql, new CourseMapper());
@@ -61,7 +66,7 @@ public class SchoolDaoImpl implements SchoolDao {
         //  Name the aggregate field `teacherCount`.
         // YOUR CODE STARTS HERE
 
-        String sql = "";
+        String sql = "select dept,count(*) as 'Staff Count' from teacher group by dept;";
 
         // YOUR CODE ENDS HERE
         return jdbcTemplate.query(sql, new TeacherCountMapper());
@@ -74,7 +79,7 @@ public class SchoolDaoImpl implements SchoolDao {
         // Name the aggregate field `numStudents`.
         // YOUR CODE STARTS HERE
 
-        String sql = "";
+        String sql = "select courseCode,courseDesc,count(*) as numStudents  from course c, course_student cs where c.cid = cs.course_id group by( courseCode);";
 
         // YOUR CODE ENDS HERE
         return jdbcTemplate.query(sql, new StudentCountMapper());
@@ -87,7 +92,7 @@ public class SchoolDaoImpl implements SchoolDao {
         // Part 1: Write a query to add the student Robert Dylan to the student table.
         // YOUR CODE STARTS HERE
 
-        String sql = "";
+        String sql = "insert into student(fName,lName) values ('Robert','Dylan');";
 
         // YOUR CODE ENDS HERE
          System.out.println(jdbcTemplate.update(sql));
@@ -99,7 +104,7 @@ public class SchoolDaoImpl implements SchoolDao {
         // Part 2: Write a query to add Robert Dylan to CS148.
         // YOUR CODE STARTS HERE
 
-        String sql = "";
+        String sql = "insert into course_student values(10,1);";
 
         // YOUR CODE ENDS HERE
         jdbcTemplate.update(sql);
@@ -110,7 +115,7 @@ public class SchoolDaoImpl implements SchoolDao {
         // Write a query to change the course description for course CS305 to "Advanced Python with Flask".
         // YOUR CODE STARTS HERE
 
-        String sql = "";
+        String sql = "update course set courseDesc = 'Advanced Python with Flask' where courseCode = 'CS305';";
 
         // YOUR CODE ENDS HERE
         jdbcTemplate.update(sql);
@@ -121,7 +126,7 @@ public class SchoolDaoImpl implements SchoolDao {
         // Write a query to remove David Mitchell as a teacher.
         // YOUR CODE STARTS HERE
 
-        String sql = "";
+        String sql = "delete from teacher where tFName ='David' and tLName = 'Mitchell';";
 
         // YOUR CODE ENDS HERE
         jdbcTemplate.update(sql);
