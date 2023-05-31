@@ -16,6 +16,7 @@ public class SchoolDaoImpl implements SchoolDao {
 
     private final JdbcTemplate jdbcTemplate;
 
+    //complete
     @Autowired
     public SchoolDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
